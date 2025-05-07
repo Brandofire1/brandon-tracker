@@ -1,3 +1,4 @@
+
 import os
 import csv
 from datetime import datetime
@@ -16,14 +17,28 @@ gc = gspread.authorize(CREDS)
 SHEET_ID = '1gH7_mkt04PkiZ-AyEprsrx5StcXekkg8tGMlYu3jU7M'
 worksheet = gc.open_by_key(SHEET_ID).sheet1
 
+# Ensure header row exists in Google Sheet
+existing = worksheet.get_all_values()
+if not existing or existing[0][0] != 'Date':
+    header = [
+        'Date', 'Training Type', 'RPE', 'PRs',
+        'Sprint Speed (ft/s)', 'Sleep (hrs)',
+        'Soreness (1-10)', 'Stool Type',
+        'Digestion Notes', 'Caffeine (mg)',
+        'Energy (1-10)'
+    ]
+    worksheet.insert_row(header, 1)
+
 # Ensure CSV has headers
 if not os.path.exists(LOG_FILE):
     with open(LOG_FILE, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow([
-            'Date', 'Training Type', 'RPE', 'PRs', 'Sprint Speed (ft/s)',
-            'Sleep (hrs)', 'Soreness (1-10)', 'Stool Type', 'Digestion Notes',
-            'Caffeine (mg)', 'Energy (1-10)'
+            'Date', 'Training Type', 'RPE', 'PRs',
+            'Sprint Speed (ft/s)', 'Sleep (hrs)',
+            'Soreness (1-10)', 'Stool Type',
+            'Digestion Notes', 'Caffeine (mg)',
+            'Energy (1-10)'
         ])
 
 @app.route('/', methods=['GET','POST'])
