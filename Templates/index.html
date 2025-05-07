@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Tracker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Workout Tracker</h1>
+        <form method="POST">
+            <label>Training Type: <input type="text" name="training_type"></label>
+            <label>RPE: <input type="text" name="rpe"></label>
+            <label>PRs: <input type="text" name="prs"></label>
+            <label>Sprint Speed (ft/s): <input type="text" name="sprint_speed"></label>
+            <label>Sleep (hrs): <input type="text" name="sleep"></label>
+            <label>Soreness (1-10): <input type="text" name="soreness"></label>
+            <label>Stool Type:
+                <select name="stool">
+                    <option value="Normal">Normal</option>
+                    <option value="Loose">Loose</option>
+                    <option value="Solid">Solid</option>
+                    <option value="Other">Other</option>
+                </select>
+            </label>
+            <label>Digestion Notes: <input type="text" name="digestion_notes"></label>
+            <label>Caffeine (mg): <input type="text" name="caffeine"></label>
+            <label>Energy (1-10): <input type="text" name="energy"></label>
+            <button type="submit">Save Entry</button>
+        </form>
+
+        <h2>Recent Entries</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Training</th>
+                    <th>RPE</th>
+                    <th>PRs</th>
+                    <th>Sprint</th>
+                    <th>Sleep</th>
+                    <th>Soreness</th>
+                    <th>Stool</th>
+                    <th>Digestion</th>
+                    <th>Caffeine</th>
+                    <th>Energy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in entries %}
+                <tr>
+                    {% for item in row %}
+                    <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
